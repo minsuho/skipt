@@ -1,0 +1,36 @@
+options:
+    prefix: &6[주식]&f
+
+load:
+    if {주식변동주기} is not set:
+        set {주식변동주기} to 10
+
+command /주식:
+    trigger:
+
+
+command /주식관리 [<text>] [<text>]:
+    trigger:
+        if arg-1 is "생성":
+            if arg-2 is not set:
+                send "주식 이름을 입력해주세요."
+                stop
+            stock_create_open(player, arg-1)
+        else:
+            send "/주식관리 생성 [이름]"
+            send "/주식관리 삭제 [이름]"
+
+
+function stock_create_open(p: player, stock_name: text):
+    set {_inv} to chest inventory with 3 row named "%{_stock_name}% 주식 생성"
+    loop 9 times:
+        set slot loop-num - 1 of {_inv} to blank stained glass pane named " "
+        set slot 17 + loop-num of {_inv} to blank stained glass pane named " "
+    set slot 10 of {_inv} to blank stained glass pane named " "
+    set slot 12 of {_inv} to blank stained glass pane named " "
+    open {_inv} to {_p}
+
+
+
+every 1 minute:
+    
